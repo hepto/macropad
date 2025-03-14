@@ -1,0 +1,79 @@
+#!/bin/sh
+
+for cmd in "$@"; do
+  case $cmd in
+    get_brightness)
+      # Requires m1ddc (in Brew)
+      /opt/homebrew/bin/m1ddc get luminance
+      ;;
+    brightness+)
+      osascript -e 'tell application "System Events"
+                      key code 113
+                    end tell'
+      ;;
+    brightness-)
+      osascript -e 'tell application "System Events"
+                      key code 107
+                    end tell'
+      ;;
+    lock_screen)
+      osascript -e 'tell application "System Events" to keystroke "q" using {control down, command down}'
+      ;;
+    switch_screen_to_macmini)
+      # Requires m1ddc (in Brew)
+      /opt/homebrew/bin/m1ddc set input 17
+      ;;
+    switch_screen_to_macbookair)
+      # Requires m1ddc (in Brew)
+      /opt/homebrew/bin/m1ddc set input 27
+      ;;
+    turn_on_dnd)
+      if [ $(defaults read com.apple.controlcenter "NSStatusItem Visible FocusModes") == 1 ]; then
+        osascript -e 'tell application "System Events" to keystroke "d" using {shift down, option down, command down}'
+        echo "🙎‍♂️"
+      else
+        osascript -e 'tell application "System Events" to keystroke "d" using {shift down, option down, command down}'
+        echo "🙅‍♂️"
+      fi
+      ;;
+    get_dnd)
+      # Checks menu bar for DND status, will lag when disable as icon does not dissapear immediately
+      if [ $(defaults read com.apple.controlcenter "NSStatusItem Visible FocusModes") == 1 ]; then
+        echo "🙅‍♂️"
+      else
+        echo "🙎‍♂️"
+      fi
+      ;;
+    get_volume_level)
+      osascript -e 'output volume of (get volume settings)'
+      ;;
+    volume+)
+      osascript -e 'set volume output volume (output volume of (get volume settings) + 3.125)
+                    output volume of (get volume settings)'
+      ;;
+    volume-)
+      osascript -e 'set volume output volume (output volume of (get volume settings) - 3.125)
+                    output volume of (get volume settings)'
+      ;;
+    volume_mute)
+      osascript -e 'if get output muted of (get volume settings) is false then
+                      set volume with output muted
+                    else
+                      set volume without output muted
+                    end if
+                    get output muted of (get volume settings)'
+      ;;
+    get_mute_state)
+      osascript -e 'get output muted of (get volume settings)'
+      ;;
+    switch_audio_to_speakers)
+      # Uses a shortcut for SoundSource bound to keystroke
+      osascript -e 'tell application "System Events" to keystroke "s" using {shift down, control down, option down, command down}'
+      ;;
+    switch_audio_to_headphones)
+      # Uses a shortcut for SoundSource bound to keystroke
+      osascript -e 'tell application "System Events" to keystroke "h" using {shift down, control down, option down, command down}'
+      ;;
+
+  esac
+done
