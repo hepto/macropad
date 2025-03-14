@@ -55,7 +55,7 @@ for cmd in "$@"; do
       osascript -e 'set volume output volume (output volume of (get volume settings) - 3.125)
                     output volume of (get volume settings)'
       ;;
-    volume_mute)
+    mute)
       osascript -e 'if get output muted of (get volume settings) is false then
                       set volume with output muted
                     else
@@ -74,6 +74,14 @@ for cmd in "$@"; do
       # Uses a shortcut for SoundSource bound to keystroke
       osascript -e 'tell application "System Events" to keystroke "h" using {shift down, control down, option down, command down}'
       ;;
+    playpause)
+      osascript -e 'tell application "Music" to playpause'
+      ;;
+    previous_track)
+      osascript -e 'tell application "Music" to play previous track'
+      ;;
+    next_track)
+      osascript -e 'tell application "Music" to play next track'
 
   esac
 done
