@@ -1,3 +1,3 @@
-# c2
+# macros
 
-A noddy shell script to assign to buttons on a control surface using Bitfocus Companion
+Collection of small shell actions to assign to shortcuts triggered by a macropad
