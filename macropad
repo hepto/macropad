@@ -75,13 +75,23 @@ for cmd in "$@"; do
       osascript -e 'tell application "System Events" to keystroke "h" using {shift down, control down, option down, command down}'
       ;;
     playpause)
-      osascript -e 'tell application "Music" to playpause'
+      osascript -e 'tell application "Shortcuts Events" to run shortcut "playpause"'
       ;;
     previous_track)
       osascript -e 'tell application "Music" to play previous track'
       ;;
     next_track)
-      osascript -e 'tell application "Music" to play next track'
+      osascript -e 'tell application "Shortcuts Events" to run shortcut "next_track"'
+      ;;
+    deepvibes_radio)
+      osascript -e 'tell application "Shortcuts Events" to run shortcut "Deepvibes Radio"'
+      ;;
+    radio_6_music)
+      osascript -e 'tell application "Shortcuts Events" to run shortcut "Radio 6 Music"'
+      ;;
+    cliqhop)
+      osascript -e 'tell application "Shortcuts Events" to run shortcut "Cliqhop"'
+      ;;
 
   esac
 done
